@@ -1,17 +1,17 @@
-package ru.kata.spring.boot_security.demo.controllers;
+package ru.kata.spring.boot_security.pp.controllers;
 
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.entities.ListOfUsers;
-import ru.kata.spring.boot_security.demo.services.ListOfUsersService;
+import ru.kata.spring.boot_security.pp.entities.ListOfUsers;
+import ru.kata.spring.boot_security.pp.services.ListOfUsersService;
 
 @Controller
 public class ListOfUsersController {
 
-    private ListOfUsersService listOfUsersService;
+    private final ListOfUsersService listOfUsersService;
 
     public ListOfUsersController(ListOfUsersService listOfUsersService) {
         this.listOfUsersService = listOfUsersService;
@@ -19,31 +19,31 @@ public class ListOfUsersController {
 
     @GetMapping("/users")
     public String allUsers(Model model) {
-        model.addAttribute("users", listOfUsersService.getAllUsers());
+        model.addAttribute("listofusers", listOfUsersService.getAllUsers());
         return "users";
     }
 
     @GetMapping(value = "/users/save")
     public String addUser(Model model) {
-        model.addAttribute("user", new ListOfUsers());
+        model.addAttribute("listofusers", new ListOfUsers());
         return "saveUser";
     }
 
     @PostMapping(value = "/users/save")
-    public String addUser(@ModelAttribute("user") ListOfUsers user) {
-        listOfUsersService.saveUser(user);
+    public String addUser(@ModelAttribute("listofusers") ListOfUsers listOfUsers) {
+        listOfUsersService.saveUser(listOfUsers);
         return "redirect:/users";
     }
 
     @GetMapping(value = "users/change/{id}")
     public String editUser(ModelMap model, @PathVariable("id") long id) {
-        model.addAttribute("user", listOfUsersService.getUserById(id));
+        model.addAttribute("listofusers", listOfUsersService.getUserById(id));
         return "changeUser";
     }
 
     @PatchMapping(value = "users/change")
-    public String edit(@ModelAttribute("user") ListOfUsers user) {
-        listOfUsersService.changeUser(user);
+    public String edit(@ModelAttribute("listofusers") ListOfUsers listOfUsers) {
+        listOfUsersService.changeUser(listOfUsers);
         return "redirect:/users";
     }
 

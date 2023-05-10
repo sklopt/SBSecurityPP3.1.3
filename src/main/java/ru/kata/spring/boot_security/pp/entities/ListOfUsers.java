@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.entities;
+package ru.kata.spring.boot_security.pp.entities;
 
 import jakarta.persistence.*;
 
@@ -16,6 +16,12 @@ public class ListOfUsers {
     private int age;
 
     public ListOfUsers() {
+    }
+
+    public ListOfUsers(String name, String surname, int age) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
     }
 
     public ListOfUsers(long id, String name, String surname, int age) {
