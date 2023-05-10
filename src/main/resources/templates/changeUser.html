@@ -10,21 +10,27 @@
 <h2>Изменение данных пользователя</h2>
 <div>
 
-    <form th:method="PATCH" th:action="@{/users/change}" th:object="${user}">
-        <input type="hidden" name="id" th:value="${user.getId()}">
+    <form th:method="PATCH" th:action="@{/users/change}" th:object="${listofusers}">
+        <input type="hidden" name="id" th:value="${listofusers.getId()}">
         <fieldset>
             <legend>Данные пользователя</legend>
             <p>
                 <label th:for="name">Имя</label>
-                <input type="text" name="name" th:id="name" th:value="${user.getName()}">
+                <label>
+                    <input type="text" name="name" th:id="name" th:value="${listofusers.getName()}">
+                </label>
             </p>
             <p>
                 <label th:for="surame">Фамилия</label>
-                <input type="text" name="surname" th:id="surname" th:value="${user.getSurname()}"><br/>
+                <label>
+                    <input type="text" name="surname" th:id="surname" th:value="${listofusers.getSurname()}">
+                </label><br/>
             </p>
             <p>
                 <label th:for="age">Возраст</label>
-                <input type="text" name="age" th:id="age" th:value="${user.getAge()}"><br/>
+                <label>
+                    <input type="text" name="age" th:id="age" th:value="${listofusers.getAge()}">
+                </label><br/>
             </p>
 
         </fieldset>
