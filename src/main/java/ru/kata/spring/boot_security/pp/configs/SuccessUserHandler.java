@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.pp.configs;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -19,15 +18,8 @@ public class SuccessUserHandler extends SimpleUrlAuthenticationSuccessHandler {
         this.httpServletResponse = httpServletResponse;
     }
 
-    // Spring Security использует объект Authentication, пользователя авторизованной сессии.
-
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-//        AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, authentication);
-//    }
-
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, @org.jetbrains.annotations.NotNull Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, @org.jetbrains.annotations.NotNull Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/admin");
