@@ -5,10 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,41 +21,32 @@ import ru.kata.spring.boot_security.pp.services.UserService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private UserService userService;
+//    add user in database
+//    insert into roles (name) values ('ROLE_USER'), ('ROLE_ADMIN');
+//    insert into users (username, password, email) values ('sklopt', '$2a$12$gfmMgOy3UbCSbQcjeyTNTeqC0Z2xd9XsdF/0c.eYSBHqOc6D2/jGe', 'sklopt@rambler.ru');
+//    insert into users_roles (user_id, role_id) VALUES (1, 2);
+//    insert into users_roles (user_id, role_id) VALUES (1, 1);
+//    insert into users (username, password, email) values ('crazyman', '$2a$12$gfmMgOy3UbCSbQcjeyTNTeqC0Z2xd9XsdF/0c.eYSBHqOc6D2/jGe', 'crazyman@mail.ru');
+//    insert into users_roles (user_id, role_id) VALUES (2, 1);
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+//    private UserService userService;
+//
+//    @Autowired
+//    public void setUserService(UserService userService) {
+//        this.userService = userService;
+//    }
+    private final UserService userDetailsService;
 
     private final SuccessUserHandler successUserHandler;
 
     @Autowired
-    public SecurityConfig(SuccessUserHandler successUserHandler) {
+    public SecurityConfig(SuccessUserHandler successUserHandler,UserService userDetailsService) {
         this.successUserHandler = successUserHandler;
+        this.userDetailsService = userDetailsService;
     }
 
-    //    @Bean
-//    public static BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//
-//    @Resource
-//    public UserDetailsService userDetailsService;
-//
-//
-//    @Bean
-//    public DaoAuthenticationProvider authProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
-
-
     @Bean
-    public SecurityFilterChain filterChain(@NotNull HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
@@ -70,6 +63,17 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
         return httpSecurity.build();
     }
+
+//    @Bean
+//    CustomUserDetailsService customUserDetailsService() {
+//        return new CustomUserDetailsService();
+//    }
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
+//        builder.userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
+//    }
 
 
 //inmemory
@@ -119,12 +123,12 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userService);
-        return authenticationProvider;
-    }
+//
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        authenticationProvider.setUserDetailsService(userService);
+//        return authenticationProvider;
+//    }
 }
