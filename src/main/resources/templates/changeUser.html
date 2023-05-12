@@ -10,7 +10,7 @@
 <h2>Изменение данных пользователя</h2>
 <div>
 
-    <form th:method="PATCH" th:action="@{/users/change}" th:object="${listofusers}">
+    <form th:method="PATCH" th:action="@{/admin/change}" th:object="${listofusers}">
         <input type="hidden" name="id" th:value="${listofusers.getId()}">
         <fieldset>
             <legend>Данные пользователя</legend>
