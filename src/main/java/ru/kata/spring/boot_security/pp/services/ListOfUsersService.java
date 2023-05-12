@@ -2,15 +2,17 @@ package ru.kata.spring.boot_security.pp.services;
 
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.pp.entities.ListOfUsers;
+import ru.kata.spring.boot_security.pp.entities.User;
 import ru.kata.spring.boot_security.pp.repositories.ListOfUsersRepository;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
 public class ListOfUsersService {
     private final ListOfUsersRepository usersRepository;
 
-    public ListOfUsersService(ListOfUsersRepository usersRepository) {
+    public ListOfUsersService(UserService userService, ListOfUsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 

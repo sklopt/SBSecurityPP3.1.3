@@ -23,12 +23,12 @@
             <td th:text="${user.getSurname()}"/>
             <td th:text="${user.getAge()}"/>
             <td>
-                <form th:action="@{/users/change/{id}(id=${user.id})}" th:object="${user}">
+                <form th:action="@{/admin/change/{id}(id=${user.id})}" th:object="${user}">
                     <button type="submit">Изменить данные пользователя</button>
                 </form>
             </td>
             <td>
-                <form th:method="DELETE" th:action="@{/users/{id}(id=${user.id})}" th:object="${user}">
+                <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}" th:object="${user}">
                     <input type="hidden" name="id" th:value="${user.id}">
                     <button type="submit">Удалить пользователя</button>
                 </form>
@@ -36,8 +36,12 @@
         </tr>
         </tbody>
     </table>
-    <form th:action="@{/users/save}">
+    <form th:action="@{/admin/save}">
         <button type="submit">Добавить нового пользователя</button>
+    </form>
+    <br/>
+    <form th:action="@{/logout}">
+        <button type="submit">Выйти</button>
     </form>
 </div>
 </body>
