@@ -13,15 +13,17 @@
         <thead>
         <tr>
             <th scope="col">Имя</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Возраст</th>
+            <th scope="col">Email</th>
+            <th scope="col">Пароль</th>
+            <th scope="col">Роль</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user :${listofusers}">
-            <td th:text="${user.getName()}"/>
-            <td th:text="${user.getSurname()}"/>
-            <td th:text="${user.getAge()}"/>
+        <tr th:each="user :${users}">
+            <td th:text="${user.getUsername()}"/>
+            <td th:text="${user.getEmail()}"/>
+            <td th:text="${user.getPassword()}"/>
+            <td th:text="${user.getRoles()}"/>
             <td>
                 <form th:action="@{/admin/change/{id}(id=${user.id})}" th:object="${user}">
                     <button type="submit">Изменить данные пользователя</button>

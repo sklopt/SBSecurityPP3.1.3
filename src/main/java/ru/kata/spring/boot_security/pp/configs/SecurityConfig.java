@@ -4,13 +4,14 @@ package ru.kata.spring.boot_security.pp.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.kata.spring.boot_security.pp.services.UserService;
 
 
 @Configuration
@@ -27,9 +28,17 @@ public class SecurityConfig {
 
     private final SuccessUserHandler successUserHandler;
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    public SecurityConfig(SuccessUserHandler successUserHandler) {
+    public SecurityConfig(SuccessUserHandler successUserHandler, UserDetailsService userDetailsService) {
         this.successUserHandler = successUserHandler;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -44,6 +53,11 @@ public class SecurityConfig {
                 )
                 .formLogin()
                 .successHandler(successUserHandler)
+//                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

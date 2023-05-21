@@ -14,14 +14,16 @@
         <tr>
             <th scope="col">Имя</th>
             <th scope="col">Email</th>
-            <th scope="col">Права доступа</th>
+            <th scope="col">Пароль</th>
+            <th scope="col">Роль</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:object="${admin}" th:each="role :${admin.getRoles()}">
+        <tr th:object="${admin}">
             <td th:text="${admin.getUsername()}"/>
             <td th:text="${admin.getEmail()}"/>
-            <td th:text="${role.getName()}"/>
+            <td th:text="${admin.getPassword()}"/>
+            <td th:text="${admin.getRoles()}"/>
         </tr>
         </tbody>
 </div>

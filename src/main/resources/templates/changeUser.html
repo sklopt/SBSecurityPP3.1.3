@@ -10,28 +10,44 @@
 <h2>Изменение данных пользователя</h2>
 <div>
 
-    <form th:method="PATCH" th:action="@{/admin/change}" th:object="${listofusers}">
-        <input type="hidden" name="id" th:value="${listofusers.getId()}">
+    <form th:method="PATCH" th:action="@{/admin/change}" th:object="${users}">
+        <input type="hidden" name="id" th:value="${users.getId()}">
         <fieldset>
             <legend>Данные пользователя</legend>
             <p>
-                <label th:for="name">Имя</label>
+                <label th:for="username">Имя</label>
                 <label>
-                    <input type="text" name="name" th:id="name" th:value="${listofusers.getName()}">
+                    <input type="text" name="username" th:id="username" th:value="${users.getUsername()}">
                 </label>
             </p>
             <p>
-                <label th:for="surame">Фамилия</label>
+                <label th:for="email">Email</label>
                 <label>
-                    <input type="text" name="surname" th:id="surname" th:value="${listofusers.getSurname()}">
+                    <input type="text" name="email" th:id="email" th:value="${users.getEmail()}">
                 </label><br/>
             </p>
             <p>
-                <label th:for="age">Возраст</label>
+                <label th:for="password">Пароль</label>
                 <label>
-                    <input type="text" name="age" th:id="age" th:value="${listofusers.getAge()}">
+                    <input type="text" name="password" th:id="password" th:value="${users.getPassword()}">
                 </label><br/>
             </p>
+            <p>
+            <label for="roles"><b>Role</b></label>
+            <select class="form-select w-5" multiple
+                    aria-label="multiple select example"
+                    size="2"
+                    id="roles"
+                    name="checkedRoles">
+                <option selected="true">
+                    USER
+                </option>
+                <option>
+                    ADMIN
+                </option>
+            </select>
+            </p>
+            <br>
 
         </fieldset>
         <button type="submit" class="btn btn-outline-danger">Сохранить изменения</button>

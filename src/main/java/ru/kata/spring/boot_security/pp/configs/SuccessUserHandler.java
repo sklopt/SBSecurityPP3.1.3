@@ -23,10 +23,12 @@ public class SuccessUserHandler extends SimpleUrlAuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/admin");
-        } else if (roles.contains("ROLE_USER")) {
-            httpServletResponse.sendRedirect("/user");
         } else {
-            httpServletResponse.sendRedirect("/logout");
+            if (roles.contains("ROLE_USER")) {
+                httpServletResponse.sendRedirect("/user");
+            } else {
+                httpServletResponse.sendRedirect("/logout");
+            }
         }
     }
 }
